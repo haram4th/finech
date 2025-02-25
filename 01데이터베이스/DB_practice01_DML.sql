@@ -27,3 +27,4 @@ SELECT p.passengerId, Name, Age, Pclass, Fare FROM passenger p LEFT JOIN ticket 
 
 SELECT * FROM passenger p INNER JOIN ticket t ON p.PassengerId = t.PassengerId INNER JOIN survived s ON p.PassengerId = s.PassengerId;
 
+SELECT * FROM passenger p INNER JOIN ticket t ON p.PassengerId = t.PassengerId Left JOIN survived s ON p.PassengerId = s.PassengerId;
