@@ -36,5 +36,5 @@ def to_stock_db(idx, stock_code, stock_name, df):
     conn = dbconnect()
     df.to_sql(f'stock_price_{year}_{month:02d}', con=conn,  if_exists="append", index=False)
     conn.close()
-    print(f"{idx+1}/{len(stock_code)} {stock_name}DB 저장 완료", end="\r")
+    print(f"{idx}/{len(stock_code)-1} {stock_name}DB 저장 완료", end="\r")
     return 
