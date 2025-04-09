@@ -3,6 +3,7 @@ import pymysql
 pymysql.install_as_MySQLdb()
 import pandas as pd
 from datetime import datetime
+import time
 
 
 def dbconnect():
@@ -18,6 +19,7 @@ def to_book_db(keyword, df):
     """
     # Database 쿼리창 오픈
     conn = dbconnect()
+    time.sleep(1)
     df.to_sql(f'{keyword}_book_info', con=conn,  if_exists="append", index=False)
     conn.close()
     
