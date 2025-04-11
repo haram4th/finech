@@ -2,7 +2,7 @@
 
 
 a = Analysis(
-    ['stock_info.py'],
+    ['exchange_rate_today.py'],
     pathex=[],
     binaries=[],
     datas=[],
@@ -22,7 +22,7 @@ exe = EXE(
     a.binaries,
     a.datas,
     [],
-    name='stock_info',
+    name='exchange_rate_today',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
