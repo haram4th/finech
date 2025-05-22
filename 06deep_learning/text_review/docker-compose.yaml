@@ -1,0 +1,7 @@
+services:
+  sentiment-app:
+    build: .
+    ports:
+      - "7860:7860"
+    container_name: bank_sentiment_app
+    restart: always
