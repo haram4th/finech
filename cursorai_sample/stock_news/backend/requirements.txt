@@ -1,0 +1,17 @@
+fastapi==0.109.1
+uvicorn==0.27.0
+sqlalchemy==2.0.25
+pymysql==1.1.0
+python-dotenv==1.0.0
+finnhub-python==2.4.19
+yfinance==0.2.35
+google-generativeai==0.3.2
+pandas==2.2.0
+numpy==1.26.3
+scikit-learn==1.4.0
+requests==2.31.0
+python-jose==3.3.0
+passlib==1.7.4
+bcrypt==4.1.2
+python-multipart==0.0.6
+pydantic-settings==2.1.0 

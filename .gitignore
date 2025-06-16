@@ -4,6 +4,7 @@ dist/
 build/
 model/
 catanddog/
+프로젝트관련/
 *.json
 *.csv
 *.exe
@@ -12,3 +13,4 @@ catanddog/
 *.jpg
 *.png
 *.env*
+*.env

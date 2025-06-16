@@ -1,0 +1,138 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+
+CursorAI Project Rules (React + FastAPI + Nginx + MySQL + Docker Compose)
+
+You are building a full-stack AI platform with:
+- React (Frontend)
+- FastAPI + Gunicorn (Backend API server)
+- Nginx (Reverse proxy / static file server)
+- MySQL (Persistent database)
+- Docker Compose (Deployment orchestration)
+
+Key Principles
+- Use a clear, modular folder structure across frontend and backend.
+- Write functional, declarative code with named exports.
+- Prefer environment-driven configurations and `.env` files.
+- Separate concerns: keep API logic, DB logic, and frontend components decoupled.
+- Each service (frontend/backend/db/nginx) must be containerized and managed via Docker Compose.
+
+Folder Structure
+
+cursorai-project/
+│
+├── frontend/                # React app (with build pipeline)
+│   ├── public/
+│   ├── src/
+│   └── Dockerfile
+│
+├── backend/                 # FastAPI app
+│   ├── app/
+│   │   ├── api/
+│   │   ├── core/
+│   │   ├── models/
+│   │   └── main.py
+│   ├── gunicorn_conf.py
+│   ├── Dockerfile
+│   └── requirements.txt
+│
+├── nginx/                  # Nginx reverse proxy
+│   ├── default.conf
+│   └── nginx.conf
+│
+├── db/                     # Optional: SQL scripts
+│   └── init.sql
+│
+├── docker-compose.yml
+├── .env
+└── README.md
+
+React Guidelines
+- Use TypeScript and functional components.
+- Folder-based modular component design.
+- Use `src/components`, `src/pages`, `src/hooks`, `src/services`.
+- Use React Query or SWR for data fetching.
+- Validate inputs on both frontend and backend.
+- Use `.env` for environment configuration:
+  VITE_API_URL=http://localhost/api
+
+FastAPI Guidelines
+- Use `async def` for I/O-bound operations (DB/API calls).
+- Always use Pydantic v2 models for input/output validation.
+- Apply the Receive an Object, Return an Object (RORO) pattern.
+- Prefer functional routes over class-based views.
+- Use dependency injection for DB, config, and services.
+
+Example Route
+@router.post("/login", response_model=UserOut)
+async def login(data: LoginIn, db: AsyncSession = Depends(get_db)):
+    user = await auth_service.login(data, db)
+    if not user:
+        raise HTTPException(status_code=401, detail="Invalid credentials")
+    return user
+
+MySQL Rules
+- Use MySQL 8.0+ with SQLAlchemy 2.0 or async DB libraries like `aiomysql`.
+- Define schema in SQLAlchemy models and use Alembic for migrations (if needed).
+- Store sensitive credentials in `.env`:
+  MYSQL_ROOT_PASSWORD=1234
+  MYSQL_DATABASE=cursorai_db
+  MYSQL_USER=cursor_user
+  MYSQL_PASSWORD=1234
+
+Gunicorn + Nginx
+- Run FastAPI via Gunicorn with `UvicornWorker`:
+  gunicorn app.main:app -k uvicorn.workers.UvicornWorker -c gunicorn_conf.py
+- Nginx proxies:
+  - `/api/*` → FastAPI backend
+  - `/` → React static build (served from `frontend/build`)
+- Use volume mapping to link frontend build to Nginx
+
+Docker Compose Rules
+- Use `docker-compose.yml` to orchestrate all services:
+  - `frontend`
+  - `backend`
+  - `nginx`
+  - `mysql`
+- All services should:
+  - Use `.env` for configuration.
+  - Expose only necessary ports.
+  - Restart automatically.
+  - Share a common network (e.g., `cursorai_net`)
+
+DevOps / Lifecycle
+- Use `build` and `depends_on` correctly in Compose.
+- Use health checks for backend readiness.
+- Use multi-stage Docker builds for frontend to optimize image size.
+- Store secrets (not in Dockerfiles) via `.env` or Docker secrets.
+
+Error Handling
+- Use `HTTPException` with meaningful `status_code` and `detail`.
+- Validate all user inputs via Pydantic schemas.
+- Use early returns and guard clauses to minimize nesting.
+- Centralize error handling with FastAPI middleware.
+- Use logging with clear error codes.
+
+Performance Rules
+- Use async DB calls and external requests.
+- Apply Redis or in-memory caching for frequent reads.
+- Minimize bundle size in React builds (code splitting, tree shaking).
+- Use Nginx for compression, caching, and static asset optimization.
+- Monitor: enable Nginx access logs, use Prometheus/Grafana if needed.
+
+Clean Code & Linting
+- React: ESLint, Prettier, Husky
+- FastAPI: `black`, `isort`, `ruff`
+- Pre-commit hooks required for both frontend and backend
+- No console logs or print statements in production
+
+Security Checklist
+- Sanitize all inputs on frontend and backend
+- Use HTTPS via Nginx or reverse proxy (TLS certs)
+- Store DB credentials and secrets securely
+- CORS configured properly in FastAPI
+- Avoid exposing internal ports publicly
+
