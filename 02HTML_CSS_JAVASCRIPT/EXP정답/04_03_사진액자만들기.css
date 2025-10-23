@@ -1,0 +1,56 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100svh;
+    display: grid;
+    place-items: center;
+    background: #0ea5e9;
+    background: linear-gradient(135deg, #e0f2fe, #fdf2f8);
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, 'Noto Sans KR', Arial, sans-serif;
+}
+
+.grid {
+    width: min(940px, 92vw);
+    background: #fff;
+    border-radius: 20px;
+    padding: 18px;
+    box-shadow: 0 18px 42px rgba(15, 23, 42, .18);
+    border: 1px solid #e5e7eb;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    /* 사진 간 간격 */
+}
+
+.item {
+    aspect-ratio: 1 / 1;
+    /* 정사각형 유지 */
+    overflow: hidden;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+}
+
+.item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* 이미지 채우기 */
+    display: block;
+    transition: transform .25s ease;
+}
+
+.item:hover img {
+    transform: scale(1.03);
+}
+
+@media (max-width: 560px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* 작은 화면에서 2열 */
+}

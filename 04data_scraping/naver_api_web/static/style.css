@@ -1,0 +1,166 @@
+/* ===========================
+   INDEX PAGE (Google-like)
+   =========================== */
+.is-index {
+  font-family: 'Inter', sans-serif;
+  background-color: #f8fafc;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+
+.is-index .container {
+  text-align: center;
+}
+
+.is-index .logo {
+  font-size: 48px;
+  font-weight: 700;
+  color: #2563eb;
+  margin-bottom: 40px;
+  letter-spacing: -1px;
+}
+
+.is-index .logo span {
+  color: #111;
+  font-weight: 400;
+}
+
+.is-index .search-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.is-index .search-form input {
+  width: 400px;
+  padding: 14px 18px;
+  font-size: 18px;
+  border: 1px solid #d1d5db;
+  border-radius: 9999px;
+  outline: none;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  transition: box-shadow 0.2s;
+}
+
+.is-index .search-form input:focus {
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
+}
+
+.is-index .search-form button {
+  padding: 12px 24px;
+  font-size: 16px;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.is-index .search-form button:hover {
+  background-color: #1d4ed8;
+}
+
+@media (max-width: 480px) {
+  .is-index .search-form input {
+    width: 260px;
+    font-size: 16px;
+  }
+}
+
+/* ===========================
+   RESULTS PAGE (Table view)
+   =========================== */
+.is-results {
+  font-family: 'Inter', sans-serif;
+  background-color: #f8fafc;
+  margin: 0;
+  padding: 0;
+  /* 인덱스의 flex 중앙정렬과 충돌 방지 */
+  height: auto;
+  display: block;
+}
+
+.is-results .container {
+  max-width: 900px;
+  margin: 60px auto;
+  background: white;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+.is-results .title {
+  font-size: 28px;
+  color: #2563eb;
+  margin-bottom: 10px;
+}
+
+.is-results .subtitle {
+  font-size: 20px;
+  color: #111;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 6px;
+}
+
+/* 표: 전부 왼쪽 정렬 */
+.is-results .result-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.is-results .result-table th,
+.is-results .result-table td {
+  text-align: left;
+  vertical-align: top;
+  padding: 10px 8px;
+  border-bottom: 1px solid #e5e7eb;
+  line-height: 1.5;
+}
+
+.is-results .result-table th {
+  background: #f1f5f9;
+  font-weight: 600;
+  color: #111;
+}
+
+.is-results .result-table td {
+  color: #333;
+}
+
+.is-results .result-table tr:hover {
+  background: #f9fafb;
+}
+
+.is-results .result-table a {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.is-results .result-table a:hover {
+  text-decoration: underline;
+}
+
+.is-results .no-result {
+  color: #999;
+  margin-top: 20px;
+}
+
+.is-results .back-link {
+  display: inline-block;
+  margin-top: 25px;
+  text-decoration: none;
+  color: #555;
+  font-size: 15px;
+}
+
+.is-results .back-link:hover {
+  color: #2563eb;
+}

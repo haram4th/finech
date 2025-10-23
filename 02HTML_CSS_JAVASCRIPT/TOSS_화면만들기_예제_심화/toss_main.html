@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Toss-style Mobile UI (Static HTML/CSS)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="./toss_main_CSS.CSS" rel="stylesheet">
+  
+</head>
+<body>
+  <main class="app">
+    <!-- STATUS BAR -->
+    <div class="statusbar">
+      <div>10:18</div>
+      <div class="icons">📡 📶 <span class="pill">73%</span></div>
+    </div>
+
+    <!-- HEADER -->
+    <div class="header-row">
+      <div style="display:flex;align-items:center;gap:8px;font-weight:800;color:#3a4a62">📁 할 일</div>
+      <div class="right-btn">
+        <span class="pill">결제</span>
+        🔔
+      </div>
+    </div>
+
+    <!-- MAIN ACCOUNT CARD -->
+    <section class="card">
+      <div class="account-main">
+        <div>
+          <div class="account-title"><span class="logo"></span> 토스뱅크 통장 · 주계좌</div>
+          <div class="balance">1,222,222원</div>
+        </div>
+        <button class="btn">송금</button>
+      </div>
+      <div class="row">
+        <div class="k">내 토스뱅크</div>
+        <div class="v">쌓인 이자 33원 ▸</div>
+      </div>
+    </section>
+
+    <!-- FREQUENT ACCOUNTS -->
+    <div class="card" style="padding:18px 14px">
+      <div class="section-title">자주 쓰는 계좌 <span style="float:right;color:#8a96a8">⚙️</span></div>
+      <div class="list">
+        <div class="item">
+          <div class="name"><span class="chip">🐟</span> 1,200,000원<br><span class="muted" style="font-weight:700">굴비적금</span></div>
+          <div></div>
+        </div>
+        <div class="item">
+          <div class="name"><span class="chip pink">🍡</span> 10,151,400원<br><span class="muted" style="font-weight:700">투자 모아보기 · 3개</span></div>
+          <div class="right"><span class="pct">+4.0%</span></div>
+        </div>
+        <div class="item">
+          <div class="name"><span class="chip gold">🏆</span> 10,000원<br><span class="muted" style="font-weight:700">토스뱅크 도전통장</span></div>
+          <div></div>
+        </div>
+      </div>
+
+      <div class="row-tabs">
+        <div class="tab">대출 1</div>
+        <div class="tab">증권 5</div>
+        <div class="tab">저축 6</div>
+        <div class="tab">모든 계좌</div>
+      </div>
+    </div>
+
+    <!-- SPENDING CARD -->
+    <div class="sp-16"></div>
+    <div class="small-card">
+      <div>
+        <div class="big">1,418,387원</div>
+        <div class="title">9월에 쓴 돈</div>
+      </div>
+      <div class="badge">내역</div>
+    </div>
+
+    <div class="sp-8"></div>
+    <div class="small-card">
+      <div>
+        <div class="big">3,439,545원</div>
+        <div class="title">9월 25일 낼 카드값</div>
+      </div>
+    </div>
+   <div class="sp-8"></div>
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div style="font-weight:900;display:flex;align-items:center;gap:8px">내 신용점수 <span class="pill" style="background:#fff2d7;color:#8a5a00">변동 보기</span></div>
+        </div>
+        <div class="btn-row">
+          <div class="btn-lite">계좌개설</div>
+          <div class="btn-lite">카드발급</div>
+          <div class="btn-lite">대출받기</div>
+        </div>
+      </div>
+
+      <div class="sp-16"></div>
+      <div class="banner">
+        <div class="mark">C</div>
+        <div>
+          <div class="headline">대신증권 신규고객 평생혜택</div>
+          <div class="muted">국내주식 유관비용만 부과</div>
+        </div>
+      </div>
+
+      <div class="row-head">OO님을 위해 준비했어요</div>
+      <div class="grid-two">
+        <div class="tile">혜택 받는 신용카드</div>
+        <div class="tile">혜택 받는 체크카드</div>
+      </div>
+
+      <div class="sp-16"></div>
+      <div class="card list-simple">
+        <div class="li"><span class="icon-square"></span> 할인·적립 쿠폰</div>
+        <div class="li"><span class="icon-square"></span> 애플허브</div>
+        <div class="li"><span class="icon-square"></span> 토스신용카드</div>
+      </div>
+
+      <nav class="navbar">
+        <div class="navitem"><span class="dot"></span>홈</div>
+        <div class="navitem active"><span class="dot"></span>혜택</div>
+        <div class="navitem"><span class="dot"></span>쇼핑</div>
+        <div class="navitem"><span class="dot"></span>증권</div>
+        <div class="navitem"><span class="dot"></span>전체</div>
+      </nav>
+    </section>
+  </main>
+</body>
+</html>

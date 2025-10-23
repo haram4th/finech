@@ -1,0 +1,461 @@
+/* =========================================================================
+   NeoFin – minimal, modern, accessible CSS (no CSS custom properties)
+   - 목적: 시스템 폰트, 낮은 대비의 카드 섀도우, 명확한 포커스 링, 모바일 가독성
+   - 설계: Light 기본 + prefers-color-scheme: dark, 레이아웃 폭 고정(960px)
+   - 주의: 모든 var() 제거, color-mix()는 rgba를 사용해 근사치로 치환
+========================================================================= */
+
+/* ------------------------------
+   0) 기본 상수(설명용 – 실제 코드는 값 직접 사용)
+   - 최대폭: 960px
+   - 라운드: 12px(버튼 10px, 켭션/키보드 6px)
+   - 포커스 링: 3px
+   - 여백 토큰: .25 / .5 / .75 / 1 / 1.5 / 2 rem
+   - 컬러(라이트):
+     배경계열: bg #ffffff / fill #f8fafc / border #e2e8f0
+     본문: #0b1220, 보조: #64748b
+     브랜드: #2563eb, 보조 #dbeafe, 포커스 #60a5fa
+     악센트/위험: #16a34a / #dc2626
+   - 컬러(다크):
+     배경계열: bg #0b1220 / fill #0f172a / border #22304a
+     본문: #e5e7eb, 보조: #94a3b8
+     브랜드/포커스: #60a5fa / #93c5fd
+--------------------------------*/
+
+/* =========================================================================
+   1) Reset & Base
+   - 요소 박스 계산을 경계포함으로 통일
+   - 시스템 폰트 스택으로 성능 및 렌더링 일관성 확보
+   - 본문 그라디언트로 은은한 깊이감
+========================================================================= */
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+html { hanging-punctuation: first last; } /* 한국어/영문 혼용 시 문장부호 걸침 */
+body{
+  font-family: system-ui,-apple-system,Segoe UI,Roboto,Pretendard,Apple SD Gothic Neo,Noto Sans KR,Helvetica,Arial,sans-serif; /* 성능/가독성 */
+  line-height: 1.6;
+  color: #0b1220; /* 본문색(라이트) */
+  background: linear-gradient(180deg, #f8fafc, #ffffff 18%); /* 상단 은은한 톤 */
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* 링크/이미지/수평선 등 인라인 요소의 기본 UX 정리 */
+img { max-width: 100%; height: auto; display: block; } /* 반응형 이미지 */
+a { color: #2563eb; text-decoration: none; }
+a:hover { text-decoration: underline; }                 /* 가벼운 피드백 */
+a:focus-visible { outline: none; box-shadow: 0 0 0 3px #60a5fa; } /* 키보드 포커스 */
+abbr[title] { text-decoration: underline dotted; cursor: help; }
+hr{
+  border: 0;
+  border-top: 1px solid #e2e8f0; /* 얇은 구분선 */
+  margin: 2rem 0;                /* 섹션 간격 */
+}
+
+/* 페이지 컨테이너: 양 옆 1rem 여백 + 최대폭 960px */
+header, main, footer{
+  width: min(100% - 2rem, 960px);
+  margin-inline: auto;
+}
+header { padding: 2rem 0 1rem; }  /* 상단은 넓게, 하단은 타이틀과 내비 간격 */
+main   { padding: 0 0 2rem; }     /* 푸터와 간격 확보 */
+footer { padding: 2rem 0; }
+
+/* =========================================================================
+   2) Typography
+   - clamp()로 화면폭에 따른 유연한 크기
+   - 제목은 약간 빽빽한 행간과 음수 트래킹으로 현대적 인상
+========================================================================= */
+h1, h2, h3 {
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  margin: 0 0 .75rem; /* 제목-본문 간격 */
+}
+h1{ font-size: clamp(1.8rem, 2.4vw + .9rem, 2.6rem); }
+h2{ font-size: clamp(1.35rem, 1.3vw + .7rem, 1.75rem); margin-top: 2rem; }
+h3{ font-size: clamp(1.1rem, .8vw + .7rem, 1.25rem);  margin-top: 1.5rem; }
+
+p, ul, ol, dl, table, figure, blockquote { margin: 0 0 1rem; } /* 문단 하단 여백 통일 */
+small { color: #64748b; } /* 보조 텍스트 대비 낮춤 */
+
+/* 인용 블록: 좌측 바 + 옅은 배경 + 카드 섀도우 */
+blockquote{
+  padding: 1rem;
+  border-left: 4px solid #2563eb;
+  background: rgba(219, 234, 254, 0.45); /* brand-weak의 옅은 채움 */
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(2,6,23,.06), 0 2px 8px rgba(2,6,23,.05);
+}
+
+/* 인라인 코드/키 입력 스타일 */
+code, kbd, samp {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: .95em; /* 줄바꿈 영향 최소화 */
+}
+kbd{
+  padding: 0 .45em;
+  border: 1px solid #e2e8f0;
+  border-bottom-width: 2px; /* 눌림 느낌 */
+  border-radius: 6px;
+  background: #f8fafc;
+}
+
+/* =========================================================================
+   3) Header & Navigation
+   - 타이틀을 pill 형태로 강조
+   - 내비는 칩 스타일(hover/focus 별도)
+========================================================================= */
+header h1{
+  display: inline-block;
+  padding: .2rem .6rem;
+  border-radius: 14px;                 /* pill */
+  background: #dbeafe;                 /* brand-weak */
+  color: rgb(33, 87, 205);             /* brand에 text 15% 섞은 톤 */
+  box-shadow: 0 10px 25px rgba(2,6,23,.06), 0 2px 8px rgba(2,6,23,.05);
+}
+header p { margin-top: .5rem; color: #64748b; }
+
+nav{
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem .75rem; /* 행/열 간격 */
+}
+nav a{
+  display: inline-block;
+  padding: .4rem .7rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 999px; /* 라운드 칩 */
+  background: #ffffff;
+  box-shadow: 0 1px 0 rgba(2,6,23,.06);
+  transition: background-color .15s ease; /* 미세한 피드백 */
+}
+nav a:hover{
+  background: #dbeafe;
+  text-decoration: none;
+}
+nav a:focus-visible{
+  outline: none;
+  box-shadow: 0 0 0 3px #60a5fa; /* 명확한 포커스 링 */
+}
+
+/* =========================================================================
+   4) Sections as Cards
+   - 경계선 + 라운드 + 소프트 섀도우: 정보 블록화
+========================================================================= */
+section{
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 25px rgba(2,6,23,.06), 0 2px 8px rgba(2,6,23,.05);
+}
+
+/* Figure: 미세한 구분을 위한 dashed + 옅은 배경 */
+figure{
+  background: #f8fafc;
+  border: 1px dashed #e2e8f0;
+  border-radius: 12px;
+  padding: .75rem;
+}
+figcaption{
+  margin-top: .5rem;
+  color: #64748b;
+  text-align: center;
+}
+
+/* About 섹션: 이미지/캡션 중앙 정렬 */
+#about figure{ margin: 0 auto 1rem; text-align: center; }
+#about figure > img{ display: block; margin-inline: auto; }
+
+/* =========================================================================
+   5) Tables (Accounts / Transactions / Rates)
+   - thead의 옅은 배경, 홀수행 zebra, hover 강조
+   - 560px 이하 가로 스크롤 허용
+========================================================================= */
+table{
+  width: 100%;
+  border-collapse: separate;  /* 둥근 모서리용 */
+  border-spacing: 0;
+  overflow: hidden;           /* 둥근모서리 클리핑 */
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: #ffffff;
+}
+caption{
+  caption-side: top;
+  text-align: left;
+  color: #64748b;
+  padding: .75rem 0;
+}
+thead th{
+  background: rgba(248, 250, 252, 0.7);
+  color: #64748b;
+  font-weight: 700;
+  text-align: left;
+}
+th, td{
+  padding: .85rem 1rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+tbody tr:nth-child(odd){ background: rgba(248, 250, 252, 0.4); }
+tbody tr:hover{ background: rgba(219, 234, 254, 0.35); }
+tfoot td{ font-weight: 700; }
+td strong{ font-weight: 800; }
+
+/* 작은 화면에서 테이블은 가로 스크롤 */
+@media (max-width: 560px){
+  table{ display: block; overflow-x: auto; white-space: nowrap; }
+}
+
+/* =========================================================================
+   6) Lists & Definition Lists
+   - 목록 들여쓰기 통일, DL은 그리드로 의미/값 구분
+========================================================================= */
+ul, ol{ padding-left: 1.25rem; }
+dl{ display: grid; grid-template-columns: 1fr 2fr; gap: .25rem .75rem; }
+dt{ font-weight: 700; color: #64748b; }
+dd{ margin: 0; }
+
+/* =========================================================================
+   7) Forms
+   - 폼 컨트롤은 테두리/인셋섀도우로 깊이감
+   - :focus-visible 링과 테두리색 일치
+   - :disabled / :read-only 가시성 추가
+========================================================================= */
+form { display: grid; gap: 1rem; } /* 필드 간 간격 1rem */
+
+fieldset{
+  margin: 0;
+  padding: 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: #f8fafc;
+}
+legend{
+  padding: 0 .5rem;
+  font-weight: 700;
+  color: #64748b;
+}
+
+label{ display: inline-block; font-weight: 600; margin-bottom: .35rem; }
+
+input, select, textarea{
+  width: 100%;
+  padding: .7rem .8rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #0b1220;
+  outline: none;
+  box-shadow: inset 0 1px 0 rgba(2,6,23,.05); /* 미세한 안쪽 음영 */
+  transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease;
+}
+input::placeholder, textarea::placeholder{ color: rgba(100, 116, 139, 0.7); }
+
+input:focus-visible, select:focus-visible, textarea:focus-visible{
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 3px #60a5fa;
+}
+
+/* 체크박스/라디오: 기본 크기 통일 */
+input[type="checkbox"], input[type="radio"]{
+  width: 1rem; height: 1rem; margin-right: .4rem; vertical-align: middle;
+}
+
+/* 비활성/읽기전용 상태 명확화 */
+input:disabled, select:disabled, textarea:disabled{
+  background: #f8fafc;
+  color: #64748b;
+  cursor: not-allowed;
+}
+input[readonly], textarea[readonly]{
+  background: #f8fafc;
+}
+
+/* 버튼: 기본/호버/액티브/비활성 분리 */
+button, .btn{
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: .5rem;
+  padding: .65rem 1rem;
+  border-radius: 10px;
+  border: 1px solid rgb(150, 179, 238); /* brand 40% + border 근사 */
+  background: linear-gradient(180deg, rgb(222, 232, 252), rgb(244, 247, 254)); /* 은은한 채움 */
+  color: #0b1220;
+  cursor: pointer;
+  font-weight: 700;
+  box-shadow: 0 10px 25px rgba(2,6,23,.06), 0 2px 8px rgba(2,6,23,.05);
+  transition: background-color .15s ease, transform .02s ease;
+}
+button:hover, .btn:hover{ background: rgb(235, 243, 254); }
+button:active, .btn:active{ transform: translateY(1px); } /* 클릭 눌림감 */
+button:focus-visible, .btn:focus-visible{ outline: none; box-shadow: 0 0 0 3px #60a5fa; }
+
+/* 프라이머리(Submit) */
+button[type="submit"]{
+  background: linear-gradient(180deg, rgb(200, 216, 250), rgb(222, 232, 252));
+  color: #ffffff;
+  border-color: rgb(94, 139, 236);
+}
+button[type="submit"]:hover{ background: #2563eb; } /* 강한 피드백 */
+button[type="submit"]:active{ transform: translateY(1px); }
+
+/* 세컨더리(Reset) */
+button[type="reset"]{
+  border-color: #e2e8f0;
+  background: rgba(248, 250, 252, 0.9);
+}
+
+/* 비활성 버튼 */
+button:disabled, .btn:disabled{
+  opacity: .6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* =========================================================================
+   8) Utilities
+   - 스크롤 부드럽게, 주소/마크 강조, 접근성 헬퍼 추가
+========================================================================= */
+#top { scroll-behavior: smooth; }
+a[href^="#"]{ scroll-behavior: smooth; }
+
+address{
+  font-style: normal;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.mark, mark{
+  background: rgba(22, 163, 74, 0.2); /* 녹색 하이라이트 */
+  padding: 0 .25em;
+  border-radius: 6px;
+}
+
+/* 스크린리더 전용 텍스트(접근성) */
+.visually-hidden{
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0);
+  white-space: nowrap; border: 0;
+}
+
+footer{
+  color: #64748b;
+  display: grid;
+  gap: .5rem;
+  text-align: center;
+}
+
+/* =========================================================================
+   9) Print
+   - 화면용 UI(내비, 버튼 등) 제거, 간결한 테두리/배경
+========================================================================= */
+@media print{
+  nav, hr, button, .btn { display: none !important; }
+  section, figure, table, address {
+    box-shadow: none !important;
+    background: #ffffff !important;
+    border-color: #dddddd !important;
+  }
+}
+
+/* =========================================================================
+   10) Dark Mode
+   - prefers-color-scheme: dark 선호 시 자동 전환
+   - 라이트 대비값을 다크 팔레트로 치환
+========================================================================= */
+@media (prefers-color-scheme: dark) {
+  body{
+    color: #e5e7eb;
+    background: linear-gradient(180deg, #0f172a, #0b1220 18%);
+  }
+
+  hr{ border-top-color: #22304a; }
+
+  header h1{
+    background: #172554;
+    color: rgb(116, 175, 248);
+    box-shadow: 0 12px 30px rgba(0,0,0,.35), 0 2px 10px rgba(0,0,0,.25);
+  }
+  header p{ color: #94a3b8; }
+
+  nav a{
+    border-color: #22304a;
+    background: #0b1220;
+  }
+  nav a:hover{ background: #172554; }
+  nav a:focus-visible{ box-shadow: 0 0 0 3px #93c5fd; }
+
+  section{
+    background: #0b1220;
+    border-color: #22304a;
+    box-shadow: 0 12px 30px rgba(0,0,0,.35), 0 2px 10px rgba(0,0,0,.25);
+  }
+
+  figure{
+    background: #0f172a;
+    border-color: #22304a;
+  }
+  figcaption{ color: #94a3b8; }
+
+  table{
+    border-color: #22304a;
+    background: #0b1220;
+  }
+  caption{ color: #94a3b8; }
+  thead th{
+    background: rgba(15, 23, 42, 0.7);
+    color: #94a3b8;
+  }
+  th, td{ border-bottom-color: #22304a; }
+  tbody tr:nth-child(odd){ background: rgba(15, 23, 42, 0.4); }
+  tbody tr:hover{ background: rgba(23, 37, 84, 0.35); }
+
+  fieldset{
+    border-color: #22304a;
+    background: #0f172a;
+  }
+  legend{ color: #94a3b8; }
+
+  input, select, textarea{
+    border-color: #22304a;
+    background: #0b1220;
+    color: #e5e7eb;
+  }
+  input::placeholder, textarea::placeholder{ color: rgba(148, 163, 184, 0.7); }
+  input:focus-visible, select:focus-visible, textarea:focus-visible{
+    border-color: #93c5fd;
+    box-shadow: 0 0 0 3px #93c5fd;
+  }
+
+  button, .btn{
+    border-color: rgb(59, 95, 144);
+    background: linear-gradient(180deg, rgb(24, 40, 65), rgb(15, 25, 43));
+    color: #e5e7eb;
+    box-shadow: 0 12px 30px rgba(0,0,0,.35), 0 2px 10px rgba(0,0,0,.25);
+  }
+  button:hover, .btn:hover{ background: rgb(18, 28, 61); }
+  button[type="submit"]{
+    background: linear-gradient(180deg, rgb(32, 55, 86), rgb(24, 40, 65));
+    color: #ffffff;
+    border-color: rgb(77, 130, 197);
+  }
+  button[type="submit"]:hover{ background: #60a5fa; }
+  button[type="reset"]{
+    border-color: #22304a;
+    background: rgba(15, 23, 42, 0.9);
+  }
+
+  address{
+    background: #0f172a;
+    border-color: #22304a;
+  }
+
+  .mark, mark{ background: rgba(34, 197, 94, 0.2); }
+
+  footer{ color: #94a3b8; }
+}

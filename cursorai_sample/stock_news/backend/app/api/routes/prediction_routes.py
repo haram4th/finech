@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from app.services.prediction_service import PredictionService
-from typing import List
+from typing import List, Optional
 from pydantic import BaseModel
 from datetime import date
 
@@ -9,7 +9,7 @@ prediction_service = PredictionService()
 
 class PredictionData(BaseModel):
     date: date
-    actual_price: float | None
+    actual_price: Optional[float]
     predicted_price: float
     confidence_score: float
 

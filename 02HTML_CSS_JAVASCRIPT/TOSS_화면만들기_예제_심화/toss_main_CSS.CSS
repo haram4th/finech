@@ -1,0 +1,243 @@
+    /* =========================
+       STEP 1: CSS 변수/베이스 세팅
+       - 테마 색상 변수, 그림자, radius
+       - 박스사이징, 폰트, 배경
+    ========================== */
+    :root{
+      --bg: #f3f5f7;
+      --card: #ffffff;
+      --text: #121418;
+      --muted: #6b7785;
+      --blue: #2f6df6;
+      --blue-ink:#2a5fe0;
+      --line: #e7ebf0;
+      --good: #10a37f;
+      --warn: #ef4444;
+      --gold: #ffbf37;
+      --shadow: 0 8px 24px rgba(16,24,40,.06);
+      --radius: 20px;
+    }
+    *{box-sizing:border-box}
+    html,body{
+      height:100%;
+      background:var(--bg);
+      color:var(--text);
+      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Apple SD Gothic Neo","Noto Sans KR",sans-serif
+    }
+
+    /* =========================
+       STEP 2: 앱 컨테이너
+       - 화면 중앙에 카드형 래퍼
+    ========================== */
+    .app{
+      max-width: 420px; /* iPhone-ish width */
+      margin: 24px auto 48px;
+      padding: 16px 16px 100px;
+      background: linear-gradient(#f7f9fb, #eef2f6);
+      border-radius: 32px;
+      box-shadow: 0 10px 40px rgba(16,24,40,.08);
+      border: 1px solid #eef1f5;
+    }
+
+    /* =========================
+       STEP 3: 상태바/헤더
+       - Flex 정렬, 작은 배지(pill)
+    ========================== */
+    .statusbar{
+      display:flex;justify-content:space-between;align-items:center;
+      font-weight:600; font-size:14px; color:#0b1220; margin-bottom:8px;
+    }
+    .statusbar .icons{display:flex;gap:10px;align-items:center;color:#0b1220}
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;background:#e9eef7;border-radius:999px;color:#223; padding:6px 10px;font-weight:600;font-size:13px
+    }
+    .header-row{display:flex;justify-content:space-between;align-items:center;margin:8px 0 12px}
+    .right-btn{display:inline-flex;gap:8px;align-items:center}
+
+    /* =========================
+       STEP 4: 공통 카드 스타일
+    ========================== */
+    .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}
+    .card+.card{margin-top:12px}
+
+    /* =========================
+       STEP 5: 컨테이너 쿼리 준비
+       - 폭 줄 때 내부 폰트 자동 축소(cqi) 사용을 위해
+       - 카드/행을 컨테이너로 지정
+    ========================== */
+    .card,.small-card,.list .item,.header-row,.row{container-type:inline-size}
+
+    /* =========================
+       STEP 6: 계좌 상단 카드
+       - 제목/잔액/버튼
+       - clamp + cqi로 반응형 글자 크기
+    ========================== */
+    .account-main{display:flex;justify-content:space-between;align-items:center}
+    .account-title{
+      display:flex;align-items:center;gap:10px;color:#51607a;font-weight:700;
+      white-space:nowrap;
+      font-size:clamp(12px,7cqi,14px);
+    }
+    .logo{width:28px;height:28px;background:var(--blue);border-radius:8px;box-shadow:0 4px 10px rgba(47,109,246,.35)}
+    .balance{
+      font-weight:800;letter-spacing:-.3px;margin:6px 0 2px;
+      white-space:nowrap;
+      font-size:clamp(20px,12cqi,28px);
+    }
+    .sub{color:#6b7785;font-weight:600}
+    .btn{background:#eef3ff;color:var(--blue-ink);border:none;border-radius:14px;padding:8px 14px;font-weight:800;cursor:pointer}
+    .btn:active{transform:translateY(1px)}
+
+    /* =========================
+       STEP 7: 카드 내 행(Row)
+       - 좌/우 키-값 정렬
+       - 우측 내용 길어질 때 elipsis 안전망
+    ========================== */
+    .row{
+      display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-top:1px dashed var(--line);
+    }
+    .row:first-child{border-top:none}
+    .row .k{color:#44536a;font-weight:700;white-space:nowrap}
+    .row .v{
+      color:#66758a;font-weight:700;white-space:nowrap;min-width:0;
+      font-size:clamp(12px,8cqi,14px);
+      overflow:hidden;text-overflow:ellipsis;
+    }
+
+    /* =========================
+       STEP 8: 자주 쓰는 계좌 리스트
+       - 리스트 아이템, 칩, 탭
+       - 금액/문구 자동 축소
+    ========================== */
+    .section-title{
+      font-weight:800;margin:14px 0 10px;
+      white-space:nowrap;
+      font-size:clamp(14px,8cqi,18px);
+    }
+    .list .item{display:flex;align-items:center;justify-content:space-between;padding:12px 6px;border-bottom:1px solid var(--line)}
+    .list .item:last-child{border-bottom:none}
+    .chip{width:34px;height:34px;border-radius:10px;background:#fff6e1;display:grid;place-items:center;box-shadow:inset 0 0 0 1px #ffe6ad}
+    .chip.pink{background:#ffecef;box-shadow:inset 0 0 0 1px #ffd1db}
+    .chip.gold{background:#fff6e1}
+    .name{
+      display:flex;align-items:center;gap:12px;font-weight:800;
+      min-width:0;white-space:nowrap;
+      font-size:clamp(13px,7.5cqi,16px);
+    }
+    .right{display:flex;align-items:baseline;gap:6px}
+    .amt{
+      font-weight:900;white-space:nowrap;
+      font-size:clamp(16px,9cqi,22px);
+    }
+    .pct{font-weight:900;color:var(--warn)}
+    .muted{color:var(--muted);font-weight:700}
+    .row-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
+    .tab{
+      background:#f1f4f9;border:1px solid #e7ebf0;border-radius:14px;padding:10px 12px;text-align:center;font-weight:800;color:#42526e;
+      white-space:nowrap;font-size:clamp(12px,7cqi,14px);
+    }
+
+    /* =========================
+       STEP 9: 지출/카드값 카드(스몰카드)
+       - 좌/우 정렬, 강조 수치
+    ========================== */
+    .small-card{
+      display:flex;justify-content:space-between;align-items:center;background:var(--card);padding:16px;border-radius:var(--radius);box-shadow:var(--shadow)
+    }
+    .small-card .title{color:#617089;font-weight:700;white-space:nowrap;font-size:clamp(12px,7cqi,14px)}
+    .small-card .big{
+      font-weight:900;margin-bottom:4px;white-space:nowrap;
+      font-size:clamp(18px,10cqi,24px);
+    }
+    .badge{background:#eef3ff;color:var(--blue-ink);font-weight:800;border-radius:12px;padding:8px 12px;white-space:nowrap}
+
+    /* =========================
+       STEP 10: 하단 네비게이션
+       - sticky nav
+    ========================== */
+    .navbar{position:sticky;bottom:0;left:0;right:0;margin:16px -16px -16px;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);background:rgba(255,255,255,.85);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:12px 4px}
+    .navitem{display:flex;flex-direction:column;align-items:center;gap:6px;color:#5b6a7f;font-weight:700;font-size:12px;white-space:nowrap}
+    .dot{width:22px;height:22px;border-radius:6px;background:#e8eefc}
+    .navitem.active{color:var(--blue-ink)}
+
+    /* =========================
+       STEP 11: 혜택 섹션(배너/그리드/리스트)
+    ========================== */
+    .screen{margin-top:16px}
+    .divider{height:12px}
+    .btn-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+    .btn-lite{background:#f5f7fb;border:1px solid #e6ebf5;border-radius:14px;padding:12px 10px;text-align:center;font-weight:800;color:#40526e;white-space:nowrap}
+    .banner{display:flex;align-items:center;gap:14px;background:#fff;border-radius:16px;padding:16px;box-shadow:var(--shadow);border:1px solid #eef1f5}
+    .banner .mark{width:40px;height:40px;border-radius:12px;background:#e8ecff;display:grid;place-items:center;font-weight:900;color:#2a47c9}
+    .headline{font-weight:900;white-space:nowrap;font-size:clamp(14px,8cqi,16px)}
+    .row-head{font-weight:900;margin:16px 0 8px;white-space:nowrap;font-size:clamp(14px,8cqi,16px)}
+    .grid-two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .tile{background:#fff;border-radius:14px;padding:16px;box-shadow:var(--shadow);border:1px solid #edf0f6;min-height:92px;display:flex;align-items:flex-end;white-space:nowrap;font-size:clamp(13px,7.5cqi,15px)}
+    .list-simple .li{display:flex;align-items:center;gap:12px;padding:14px 2px;border-bottom:1px solid var(--line);white-space:nowrap;font-size:clamp(13px,7.5cqi,15px)}
+    .list-simple .li:last-child{border-bottom:none}
+    .icon-square{width:26px;height:26px;border-radius:8px;background:#e9eef9}
+
+    /* =========================
+       STEP 12: 여백 유틸리티
+    ========================== */
+    .sp-8{height:8px}
+    .sp-16{height:16px}
+    .sp-24{height:24px}
+
+    /* =========================
+       STEP 13: 매우 좁은 기기 보정 (선택)
+       - 극단적 폭에서 폰트 하한 보정
+    ========================== */
+    @media (max-width:360px){
+      .amt{font-size:20px}
+      .balance{font-size:26px}
+    }
+
+
+    /* ───────────────────────────────────────────────────────────
+   1) Fallback (모든 브라우저에서 적용)
+   - 컨테이너 쿼리를 지원하지 않는 환경을 위해
+   - vw, @media 를 이용해 "대략적인" 수축/확장을 구현
+   - 컨테이너 크기 기준은 아니지만, 최소/최대는 보장
+   ─────────────────────────────────────────────────────────── */
+.account-title{ white-space:nowrap; font-size:clamp(12px, 2.8vw, 14px); }
+.balance{       white-space:nowrap; font-size:clamp(20px, 5.8vw, 28px); }
+.small-card .big{                font-size:clamp(18px, 5.0vw, 24px); }
+.section-title{                   font-size:clamp(14px, 3.6vw, 18px); }
+.name{                            font-size:clamp(13px, 3.5vw, 16px); }
+.amt{                             font-size:clamp(16px, 4.5vw, 22px); }
+.row .v{                          font-size:clamp(12px, 3.0vw, 14px); }
+.tab{                             font-size:clamp(12px, 3.0vw, 14px); }
+.small-card .title{               font-size:clamp(12px, 3.0vw, 14px); }
+.headline,.row-head{              font-size:clamp(14px, 3.4vw, 16px); }
+.tile,.list-simple .li{           font-size:clamp(13px, 3.2vw, 15px); }
+
+/* 아주 좁은 기기에서(예: 360px 이하) 하한선 살짝 낮춤 */
+@media (max-width: 360px){
+  .amt{ font-size:clamp(14px, 5.2vw, 22px); }
+  .balance{ font-size:clamp(18px, 6.6vw, 28px); }
+}
+
+/* ───────────────────────────────────────────────────────────
+   2) Enhanced (컨테이너 쿼리를 지원하는 브라우저에서만 덮어쓰기)
+   - container-type을 선언하고 cqi 단위로 더 정밀하게 반응
+   - 동일한 선택자에 대해 아래 규칙이 fallback을 override
+   ─────────────────────────────────────────────────────────── */
+@supports (container-type: inline-size) {
+  /* 컨테이너 선언: 이들 내부에서 cqi 사용 가능 */
+  .card, .small-card, .list .item, .header-row, .row {
+    container-type: inline-size;
+  }
+
+  .account-title{ font-size:clamp(12px, 7cqi, 14px); }
+  .balance{       font-size:clamp(20px, 12cqi, 28px); }
+  .small-card .big{                font-size:clamp(18px, 10cqi, 24px); }
+  .section-title{                   font-size:clamp(14px, 8cqi, 18px); }
+  .name{                            font-size:clamp(13px, 7.5cqi, 16px); }
+  .amt{                             font-size:clamp(16px, 9cqi, 22px); }
+  .row .v{                          font-size:clamp(12px, 8cqi, 14px); }
+  .tab{                             font-size:clamp(12px, 7cqi, 14px); }
+  .small-card .title{               font-size:clamp(12px, 7cqi, 14px); }
+  .headline, .row-head{             font-size:clamp(14px, 8cqi, 16px); }
+  .tile, .list-simple .li{          font-size:clamp(13px, 7.5cqi, 15px); }
+}

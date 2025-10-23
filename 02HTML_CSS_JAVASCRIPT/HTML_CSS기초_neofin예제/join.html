@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>문의 및 가입</title>
+</head>
+<body>
+    <!-- 문의 -->
+    <section id="contact">
+      <h2>문의/가입</h2>
+      <form method="get">
+        <fieldset>
+          <legend>기본 정보</legend>
+
+          <p>
+            <label for="name">이름</label><br>
+            <input id="name" name="name" type="text" required placeholder="홍길동">
+          </p>
+
+          <p>
+            <label for="email">이메일</label><br>
+            <input id="email" name="email" type="email" required placeholder="you@example.com">
+          </p>
+
+          <p>
+            <label for="type">문의 유형</label><br>
+            <select id="type" name="type" required>
+              <option value="">선택하세요</option>
+              <option value="signup">가입 문의</option>
+              <option value="fee">수수료 문의</option>
+              <option value="security">보안 문의</option>
+            </select>
+          </p>
+
+          <p>
+            <span>해외 결제 이용</span><br>
+            <label><input type="radio" name="intl" value="yes"> 예</label>
+            <label><input type="radio" name="intl" value="no" checked> 아니오</label>
+          </p>
+
+          <p>
+            <label for="msg">메시지</label><br>
+            <textarea id="msg" name="msg" rows="5" placeholder="문의 내용을 적어주세요"></textarea>
+          </p>
+
+          <p>
+            <label><input type="checkbox" name="agree" required> 개인정보 처리방침에 동의합니다.</label><br>
+            <small>제출 시 동의로 간주됩니다.</small>
+          </p>
+        </fieldset>
+
+        <p>
+          <button type="submit">제출</button>
+          <button type="reset">초기화</button>
+        </p>
+      </form>
+
+      <p><a href="./neofin.html" target="_self">메인 페이지로</a></p>
+</body>
+</html>

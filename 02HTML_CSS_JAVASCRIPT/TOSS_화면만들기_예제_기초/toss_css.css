@@ -1,0 +1,150 @@
+/* 모든 요소에 공통 적용: 박스 크기 계산을 border-box로,
+   기본 margin, padding은 없앰 */
+* { 
+  box-sizing: border-box; 
+  margin: 0; 
+  padding: 0; 
+}
+
+/* 전체 페이지(body) 스타일 */
+body {
+  font-family: Inter, sans-serif; /* 글꼴 지정 */
+  background: #f3f5f7;            /* 연한 회색 배경 */
+  color: #121418;                 /* 진한 글자색 */
+}
+
+/* 앱 전체 컨테이너 */
+.app {
+  max-width: 420px;        /* 최대 너비 */
+  margin: 24px auto;       /* 위아래 24px, 좌우 가운데 정렬 */
+  padding: 16px;           /* 안쪽 여백 */
+  background: #f9fafc;     /* 밝은 배경색 */
+  border-radius: 32px;     /* 모서리 둥글게 */
+}
+
+/* 상단 상태바 */
+.statusbar {
+  display: flex; 
+  justify-content: space-between; /* 양쪽 끝에 배치 */
+  font-weight: 600; 
+  font-size: 14px;
+}
+
+/* 알약 모양 라벨 */
+.pill {
+  background: #e9eef7;     /* 옅은 회색-파랑 배경 */
+  border-radius: 999px;    /* 완전 둥근 모양 */
+  padding: 4px 8px;        /* 안쪽 여백 */
+  font-size: 13px;
+}
+
+/* 헤더 영역 */
+.header-row {
+  display: flex; 
+  justify-content: space-between; 
+  margin: 8px 0 12px; /* 위 8px, 아래 12px */
+}
+
+/* 카드 컴포넌트 */
+.card {
+  background: #ffffff;     /* 흰 배경 */
+  border-radius: 20px;     /* 모서리 둥글게 */
+  padding: 18px; 
+  margin-top: 12px;
+  box-shadow: 0 8px 24px rgba(16,24,40,.06); /* 그림자 효과 */
+}
+
+/* 계좌 메인 정보 (좌우 배치) */
+.account-main {
+  display: flex; 
+  justify-content: space-between;
+}
+
+/* 큰 금액 표시 */
+.balance {
+  font-size: 28px; 
+  font-weight: 800;
+  white-space: nowrap; /* 줄바꿈 방지 */
+  font-size: clamp(20px, 10cqi, 28px); /* 반응형 글자 크기 */
+}
+
+/* 파란 버튼 스타일 */
+.btn {
+  background: #eef3ff;  /* 연한 파랑 배경 */
+  color: #2f6df6;       /* 파란 글자 */
+  border-radius: 14px;  /* 둥근 버튼 */
+  padding: 8px 14px;
+  font-weight: 800;
+}
+
+/* 카드 내부 줄 구분 */
+.row {
+  display: flex; 
+  justify-content: space-between;
+  border-top: 1px dashed #e7ebf0; /* 점선 */
+  padding-top: 12px; 
+  margin-top: 12px;
+}
+
+/* 섹션 제목 */
+.section-title {
+  font-weight: 800; 
+  margin-bottom: 10px;
+}
+
+/* 목록 아이템 */
+.list .item {
+  display: flex; 
+  justify-content: space-between;
+  padding: 12px 0; 
+  border-bottom: 1px solid #e7ebf0;
+}
+
+/* 작은 카드 (요약 정보 표시) */
+.small-card {
+  display: flex; 
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 16px; 
+  margin-top: 12px;
+}
+
+/* 작은 카드 안에서 큰 숫자 */
+.small-card .big { 
+  font-size: 24px; 
+  font-weight: 900; 
+  white-space: nowrap;
+  font-size: clamp(18px, 9cqi, 24px);
+}
+
+/* 배지(라벨) */
+.badge {
+  background: #eef3ff; /* 연한 파랑 */
+  color: #2f6df6;      /* 파란 글자 */
+  border-radius: 12px; 
+  padding: 6px 12px;
+}
+
+/* 하단 네비게이션 바 */
+.navbar {
+  position: sticky; 
+  bottom: 0;              /* 화면 맨 아래 붙임 */
+  display: flex; 
+  justify-content: space-around;
+  border-top: 1px solid #e7ebf0;
+  background: #fff; 
+  padding: 12px 0;
+}
+
+/* 네비게이션 아이템 */
+.navitem { 
+  font-size: 12px; 
+  font-weight: 700; 
+}
+
+/* 현재 선택된 메뉴 */
+.navitem.active { 
+  color: #2f6df6; 
+}
