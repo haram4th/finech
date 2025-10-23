@@ -14,3 +14,5 @@ catanddog/
 *.png
 *.env*
 *.env
+dist/
+build/
